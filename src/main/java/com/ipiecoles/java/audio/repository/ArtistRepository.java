@@ -9,6 +9,6 @@ public interface ArtistRepository extends PagingAndSortingRepository<Artist, Int
 
     // récupérer de manière paginée les artistes dont le nom contient une chaîne
     //de caractère sans prendre en compte la casse
-    Page<Artist> findByNameIgnoreCase(String name, Pageable pageable);
+    Page<Artist> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
 }

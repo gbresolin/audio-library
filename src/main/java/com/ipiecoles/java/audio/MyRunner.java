@@ -47,8 +47,8 @@ public class MyRunner implements CommandLineRunner {
         //de caractère sans prendre en compte la casse
 
         PageRequest pageRequest = PageRequest.of(0, 5, Sort.Direction.ASC, "artistId");
-        Page<Artist> artists = artistRepository.findByNameIgnoreCase("accept", pageRequest);
-        print("Le nom de l'artiste est : " + artists);
+        Page<Artist> artists = artistRepository.findByNameContainingIgnoreCase("black", pageRequest);
+        print("Les résultats sont : " + artists);
 
 
 
