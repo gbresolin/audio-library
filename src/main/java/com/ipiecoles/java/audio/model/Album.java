@@ -10,7 +10,7 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "AlbumId")
-    private Long albumId;
+    private Integer albumId;
 
     @Column(name = "Title")
     private String title;
@@ -25,7 +25,7 @@ public class Album {
 
     public Album() {}
 
-    public Album(Long albumId, String title, Artist artist) {
+    public Album(Integer albumId, String title, Artist artist) {
         this.albumId = albumId;
         this.title = title;
         this.artist = artist;
@@ -33,11 +33,11 @@ public class Album {
 
 // Getters & Setters
 
-    public Long getAlbumId() {
+    public Integer getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(Long albumId) {
+    public void setAlbumId(Integer albumId) {
         this.albumId = albumId;
     }
 
