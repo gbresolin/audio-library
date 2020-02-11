@@ -3,7 +3,7 @@ package com.ipiecoles.java.audio.exception;
 import com.ipiecoles.java.audio.model.Artist;
 
 public class ArtistException extends Throwable {
-    public static final String ID = "L'identifiant passé ne correspond pas à l'identifiant de l'employé : ";
+    public static final String ID = "L'identifiant passé ne correspond pas à l'identifiant de l'artiste : ";
 
     public ArtistException(String message, Artist artist, Object valeurIncorrecte) {
         super(message + valeurIncorrecte + ", artiste : " + artist.toString());
