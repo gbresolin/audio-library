@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 import java.util.Optional;
 
 @RestController
@@ -20,12 +21,14 @@ public class ArtistController {
     @Autowired
     private ArtistRepository artistRepository;
 
+    // Compter les artistes
     @RequestMapping(value = "/count", method = RequestMethod.GET)
     public long countArtists(){
         //Récupérer le nombre d'artistes et l'envoyer au client
         return artistRepository.count();
     }
 
+    // 1 - Afficher un artiste
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Artist getArtistByID(@PathVariable("id") Integer id){
         //Récupérer les informations de l'artiste par ID
@@ -37,6 +40,7 @@ public class ArtistController {
         throw new EntityNotFoundException("L'artiste d'identifiant " + id + " n'existe pas.");
     }
 
+    // 2 - Recherche par nom
     @RequestMapping(value = "", params = "name")
     public Page<Artist> findArtistWithName(
             @RequestParam("name") String name,
@@ -48,7 +52,29 @@ public class ArtistController {
             return artistRepository.findByNameContainingIgnoreCase(name, PageRequest.of(page, size, sortDirection, sortProperty));
     }
 
+    // 3 - Liste des artistes
+    @GetMapping
+    public Page<Artist> ListArtistByPagination(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @RequestParam(value = "sortProperty", defaultValue = "name") String sortProperty,
+            @RequestParam(value = "sortDirection", defaultValue = "ASC") Sort.Direction sortDirection){
 
+        if (size <= 1 || size > 50)  {
+            throw new IllegalArgumentException("La taille des pages doit être comprise entre 0 et 50.");
+        }
+
+        Long maxPage = artistRepository.count() / size;
+        if (page < 0 || page >= maxPage){
+            throw new IllegalArgumentException("La page " + page + " doit être comprise entre 0 et " + maxPage);
+        }
+
+        if(!Arrays.asList("id", "name").contains(sortProperty)){
+            throw new IllegalArgumentException("La propriété de tri est incorrecte");
+        }
+
+        return artistRepository.findAll(PageRequest.of(page,size, sortDirection, sortProperty));
+    }
 
 
 }
