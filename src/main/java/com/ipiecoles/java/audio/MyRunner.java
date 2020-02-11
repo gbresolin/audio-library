@@ -32,12 +32,15 @@ public class MyRunner implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         Connection connexion = initConnection();
         Statement statement = connexion.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM artist WHERE artistId = '5' LIMIT 10");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM artist WHERE id = '5' LIMIT 10");
         while ( resultSet.next() ) {
             print(resultSet.getString("name"));
         }
         // Pour afficher le nombre d'albums total
         System.out.println(albumRepository.count());
+
+        // Pour afficher l'artiste en fonction de son ID
+        System.out.println(albumRepository.findById(1));
 
         // rechercher un album en fonction de son nom
         Album t = albumRepository.findByTitle("Facelift");
@@ -46,7 +49,7 @@ public class MyRunner implements CommandLineRunner {
         // récupérer de manière paginée les artistes dont le nom contient une chaîne
         //de caractère sans prendre en compte la casse
 
-        PageRequest pageRequest = PageRequest.of(0, 5, Sort.Direction.ASC, "artistId");
+        PageRequest pageRequest = PageRequest.of(0, 5, Sort.Direction.ASC, "id");
         Page<Artist> artists = artistRepository.findByNameContainingIgnoreCase("black", pageRequest);
         print("Les résultats sont : " + artists);
 

@@ -9,15 +9,15 @@ public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @Column(name = "AlbumId")
-    private Integer albumId;
+    //@Column(name = "AlbumId")
+    private Integer id;
 
-    @Column(name = "Title")
+    //@Column(name = "Title")
     private String title;
 
 
     @ManyToOne
-    @JoinColumn(name = "ArtistId")
+    @JoinColumn(name = "artistId")
 
     private Artist artist;
 
@@ -25,21 +25,18 @@ public class Album {
 
     public Album() {}
 
-    public Album(Integer albumId, String title, Artist artist) {
-        this.albumId = albumId;
+    public Album(Integer id, String title, Artist artist) {
+        this.id = id;
         this.title = title;
         this.artist = artist;
     }
 
 // Getters & Setters
 
-    public Integer getAlbumId() {
-        return albumId;
-    }
 
-    public void setAlbumId(Integer albumId) {
-        this.albumId = albumId;
-    }
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
 
     public String getTitle() {
         return title;

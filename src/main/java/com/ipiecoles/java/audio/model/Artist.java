@@ -1,5 +1,8 @@
 package com.ipiecoles.java.audio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,34 +11,32 @@ import java.util.List;
 public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ArtistId")
-    private Integer artistId;
+    //@Column(name = "ArtistId")
+    private Integer id;
 
-    @Column(name = "Name")
+    //@Column(name = "Name")
     private String name;
 
     @OneToMany( mappedBy = "artist" )
+    @JsonIgnoreProperties("artist")
     private List<Album> albums;
 
     // Constructeurs
 
     public Artist(){}
 
-    public Artist(Integer artistId, List<Album> albums, String name) {
-        this.artistId = artistId;
-        this.albums = albums;
+    public Artist(Integer id, String name, List<Album> albums) {
+        this.id = id;
         this.name = name;
+        this.albums = albums;
     }
 
 // Getters & Setters
 
-    public Integer getArtistId() {
-        return artistId;
-    }
 
-    public void setArtistId(Integer artistId) {
-        this.artistId = artistId;
-    }
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
 
     public List<Album> getAlbums() {
         return albums;
@@ -56,7 +57,7 @@ public class Artist {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Artist{");
-        sb.append("id artiste='").append(artistId).append('\'');
+        sb.append("id artiste='").append(id).append('\'');
         sb.append("nom artiste='").append(name).append('\'');
         sb.append('}');
         return sb.toString();
