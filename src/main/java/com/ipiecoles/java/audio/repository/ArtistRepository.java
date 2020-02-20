@@ -5,10 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
+
 public interface ArtistRepository extends PagingAndSortingRepository<Artist, Integer> {
 
     // récupérer de manière paginée les artistes dont le nom contient une chaîne
     //de caractère sans prendre en compte la casse
     Page<Artist> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
+    List<Artist> findByName(String name);
 
 }

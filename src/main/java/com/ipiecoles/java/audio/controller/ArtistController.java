@@ -1,6 +1,7 @@
 package com.ipiecoles.java.audio.controller;
 
 
+import com.ipiecoles.java.audio.exception.ConflictException;
 import com.ipiecoles.java.audio.model.Artist;
 import com.ipiecoles.java.audio.repository.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -75,6 +78,33 @@ public class ArtistController {
 
         return artistRepository.findAll(PageRequest.of(page,size, sortDirection, sortProperty));
     }
+
+    // 4 - Création d'un artiste
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = "application/json",
+            produces = MediaType.APPLICATION_JSON_VALUE // MediaType.APPLICATION_JSON_VALUE = "application/json"
+    )
+    @ResponseStatus(HttpStatus.CREATED)
+    public Artist createArtist (
+            @RequestBody Artist artist
+    ) throws ConflictException {
+        if (artistRepository.findByName(artist.getName()) != null){
+            throw new ConflictException("Un artiste existe déjà avec ce nom !");
+        }
+        return artistRepository.save(artist);
+    }
+
+    // 6 - Suppression d'un Artiste
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteArtist (
+            @PathVariable ("id") Integer idArtist){
+        artistRepository.deleteById(idArtist);
+    }
+
+
+
 
 
 }

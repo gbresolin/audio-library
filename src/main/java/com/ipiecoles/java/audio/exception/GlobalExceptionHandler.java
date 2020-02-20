@@ -31,4 +31,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return entityNotFoundException.getMessage();
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleIllegalArgumentException(
+            IllegalArgumentException illegalArgumentException) {
+        return  illegalArgumentException.getMessage();
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleConflictException(ConflictException e) {
+        return e.getMessage();
+    }
+
 }
