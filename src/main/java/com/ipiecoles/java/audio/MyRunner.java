@@ -32,12 +32,21 @@ public class MyRunner implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         Connection connexion = initConnection();
         Statement statement = connexion.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM artist WHERE id = '5' LIMIT 10");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM artist WHERE id = '6' LIMIT 10");
         while ( resultSet.next() ) {
             print(resultSet.getString("name"));
         }
         // Pour afficher le nombre d'albums total
         System.out.println(albumRepository.count());
+
+
+        // Vérifier si un artiste exsite ou pas
+        if (artistRepository.existsByName("Madonna") == true){
+                System.out.println("Madonna existe déjà");
+            }
+            else {
+                System.out.println("Madonna n'existe pas, on créé !");
+        }
 
         // Pour afficher l'artiste en fonction de son ID
         System.out.println(albumRepository.findById(1));

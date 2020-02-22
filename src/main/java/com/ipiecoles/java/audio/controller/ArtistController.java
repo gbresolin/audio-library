@@ -4,6 +4,7 @@ package com.ipiecoles.java.audio.controller;
 import com.ipiecoles.java.audio.exception.ConflictException;
 import com.ipiecoles.java.audio.model.Artist;
 import com.ipiecoles.java.audio.repository.ArtistRepository;
+import com.ipiecoles.java.audio.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/artists")
 public class ArtistController {
+
+    @Autowired
+    private ArtistService artistService;
 
     @Autowired
     private ArtistRepository artistRepository;
@@ -79,7 +83,13 @@ public class ArtistController {
         return artistRepository.findAll(PageRequest.of(page,size, sortDirection, sortProperty));
     }
 
+
     // 4 - Création d'un artiste
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "")
+    public Artist createArtist(@RequestBody Artist artist) throws ConflictException {
+        return this.artistService.creerArtist(artist);
+    }
+    /*
     @RequestMapping(
             method = RequestMethod.POST,
             consumes = "application/json",
@@ -94,6 +104,8 @@ public class ArtistController {
         }
         return artistRepository.save(artist);
     }
+
+     */
 
     // 6 - Suppression d'un Artiste
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

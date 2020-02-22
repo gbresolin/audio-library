@@ -15,4 +15,6 @@ public interface ArtistRepository extends PagingAndSortingRepository<Artist, Int
 
     List<Artist> findByName(String name);
 
+    boolean existsByName(String name);
+
 }
