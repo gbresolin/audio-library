@@ -107,6 +107,21 @@ public class ArtistController {
 
      */
 
+    // 5 - Modification d'un artiste
+    @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.PUT,
+            consumes = "application/json",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public Artist updateArtist (
+            @PathVariable ("id") Integer idArtist,
+            @RequestBody Artist artist
+    ) {
+        return artistRepository.save(artist);
+    }
+
+
     // 6 - Suppression d'un Artiste
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
