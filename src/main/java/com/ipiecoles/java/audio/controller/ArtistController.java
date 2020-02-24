@@ -3,6 +3,7 @@ package com.ipiecoles.java.audio.controller;
 
 import com.ipiecoles.java.audio.exception.ConflictException;
 import com.ipiecoles.java.audio.model.Artist;
+import com.ipiecoles.java.audio.repository.AlbumRepository;
 import com.ipiecoles.java.audio.repository.ArtistRepository;
 import com.ipiecoles.java.audio.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,9 +130,6 @@ public class ArtistController {
             @PathVariable ("id") Integer idArtist){
         artistRepository.deleteById(idArtist);
     }
-
-
-
 
 
 }
