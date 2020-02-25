@@ -31,7 +31,6 @@ public class ArtistService {
     @Autowired
     private ArtistRepository artistRepository;
 
-
     public Page<Artist> findByNameContainingIgnoreCase(
             @Min(message = "Le numéro de page ne peut être inférieur à 0", value = PAGE_MIN)
                     Integer page,

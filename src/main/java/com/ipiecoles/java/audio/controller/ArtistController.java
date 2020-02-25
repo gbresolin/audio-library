@@ -1,16 +1,13 @@
 package com.ipiecoles.java.audio.controller;
 
 
-import com.ipiecoles.java.audio.exception.ArtistException;
 import com.ipiecoles.java.audio.exception.ConflictException;
 import com.ipiecoles.java.audio.model.Artist;
-import com.ipiecoles.java.audio.repository.AlbumRepository;
 import com.ipiecoles.java.audio.repository.ArtistRepository;
 import com.ipiecoles.java.audio.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +27,9 @@ public class ArtistController {
     @Autowired
     private ArtistRepository artistRepository;
 
+    public ArtistController() {
+    }
+
     // Compter les artistes
     @RequestMapping(value = "/count", method = RequestMethod.GET)
     public long countArtists(){
@@ -46,7 +46,6 @@ public class ArtistController {
         }
         throw new EntityNotFoundException("L'artiste d'identifiant " + id + " n'existe pas.");
     }
-
 
 
     // 2 - Recherche par nom
@@ -94,8 +93,6 @@ public class ArtistController {
 
 
     // 5 - Modification d'un artiste
-
-
     @RequestMapping(
             value = "/{id}",
             method = RequestMethod.PUT,
@@ -107,22 +104,6 @@ public class ArtistController {
         return this.artistService.updateArtist(id,artist);
     }
 
-   /*
-    @RequestMapping(
-            value = "/{id}",
-            method = RequestMethod.PUT,
-            consumes = "application/json",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public Artist updateArtist (
-            @PathVariable ("id") Integer idArtist,
-            @RequestBody Artist artist
-    ) {
-        return artistRepository.save(artist);
-    }
-
-    */
-
 
     // 6 - Suppression d'un Artiste
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
@@ -130,6 +111,5 @@ public class ArtistController {
     public void deleteArtist(@PathVariable ("id") Integer idArtist) {
         artistRepository.deleteById(idArtist);
     }
-
 
 }

@@ -9,8 +9,10 @@ import java.util.List;
 
 public interface ArtistRepository extends PagingAndSortingRepository<Artist, Integer> {
 
-    // récupérer de manière paginée les artistes dont le nom contient une chaîne
-    //de caractère sans prendre en compte la casse
+    /*
+    Récupérer de manière paginée les artistes dont le nom contient une chaîne
+    de caractère sans prendre en compte la casse
+     */
     Page<Artist> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
     List<Artist> findByName(String name);

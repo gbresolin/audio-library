@@ -1,6 +1,5 @@
 package com.ipiecoles.java.audio.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -32,7 +31,6 @@ public class Artist {
     }
 
 // Getters & Setters
-
 
     public Integer getId() { return id; }
 
