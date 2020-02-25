@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/albums")
 public class AlbumController {
@@ -24,7 +27,11 @@ public class AlbumController {
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "")
     public Album createAlbum (
             @RequestBody Album album
-    ) {
+    ) throws ConflictException {
+        //Album albumsearch = albumRepository.findByTitle(album.getTitle());
+        if(albumRepository.existsByTitle(album.getTitle()) == true){
+            throw new ConflictException("L'album existe déjà");
+        }
         return albumRepository.save(album);
     }
 

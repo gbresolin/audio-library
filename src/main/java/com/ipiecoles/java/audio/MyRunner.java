@@ -48,6 +48,14 @@ public class MyRunner implements CommandLineRunner {
                 System.out.println("Madonna n'existe pas, on créé !");
         }
 
+        // Vérifier si un album existe ou pas
+        if (albumRepository.existsByTitle("test") == true){
+            System.out.println("test existe déjà");
+        }
+        else {
+            System.out.println("test n'existe pas, on créé !");
+        }
+
         // Pour afficher l'artiste en fonction de son ID
         System.out.println(albumRepository.findById(1));
 

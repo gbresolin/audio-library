@@ -39,14 +39,14 @@ public class ArtistController {
     // 1 - Afficher un artiste
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Artist getArtistByID(@PathVariable("id") Integer id){
-        //Récupérer les informations de l'artiste par ID
-        //return employeRepository.findById(id).get();
         Optional<Artist> a = artistRepository.findById(id);
         if(a.isPresent()) {
             return a.get();
         }
         throw new EntityNotFoundException("L'artiste d'identifiant " + id + " n'existe pas.");
     }
+
+
 
     // 2 - Recherche par nom
     @RequestMapping(value = "", params = "name")

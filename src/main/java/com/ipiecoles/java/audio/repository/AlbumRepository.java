@@ -10,4 +10,6 @@ public interface AlbumRepository extends PagingAndSortingRepository<Album, Integ
     // rechercher un album en fonction de son nom
     Album findByTitle(String title);
 
+    boolean existsByTitle(String title);
+
 }
