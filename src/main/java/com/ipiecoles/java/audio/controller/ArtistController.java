@@ -1,6 +1,7 @@
 package com.ipiecoles.java.audio.controller;
 
 
+import com.ipiecoles.java.audio.exception.ArtistException;
 import com.ipiecoles.java.audio.exception.ConflictException;
 import com.ipiecoles.java.audio.model.Artist;
 import com.ipiecoles.java.audio.repository.AlbumRepository;
@@ -90,25 +91,23 @@ public class ArtistController {
     public Artist createArtist(@RequestBody Artist artist) throws ConflictException {
         return this.artistService.creerArtist(artist);
     }
-    /*
-    @RequestMapping(
-            method = RequestMethod.POST,
-            consumes = "application/json",
-            produces = MediaType.APPLICATION_JSON_VALUE // MediaType.APPLICATION_JSON_VALUE = "application/json"
-    )
-    @ResponseStatus(HttpStatus.CREATED)
-    public Artist createArtist (
-            @RequestBody Artist artist
-    ) throws ConflictException {
-        if (artistRepository.findByName(artist.getName()) != null){
-            throw new ConflictException("Un artiste existe déjà avec ce nom !");
-        }
-        return artistRepository.save(artist);
-    }
 
-     */
 
     // 5 - Modification d'un artiste
+
+
+    @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.PUT,
+            consumes = "application/json",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public Artist updateArtist(@PathVariable("id") Integer id, @RequestBody Artist artist){
+        //return artistRepository.save(artist);
+        return this.artistService.updateArtist(id,artist);
+    }
+
+   /*
     @RequestMapping(
             value = "/{id}",
             method = RequestMethod.PUT,
@@ -122,12 +121,13 @@ public class ArtistController {
         return artistRepository.save(artist);
     }
 
+    */
+
 
     // 6 - Suppression d'un Artiste
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteArtist (
-            @PathVariable ("id") Integer idArtist){
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteArtist(@PathVariable ("id") Integer idArtist) {
         artistRepository.deleteById(idArtist);
     }
 

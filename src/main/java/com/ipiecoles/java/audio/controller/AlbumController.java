@@ -36,29 +36,6 @@ public class AlbumController {
     }
 
 
-    /*
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value = "")
-    //@RequestMapping(value = "/{idArtist}/albums/{nomAlbum}/add", method = RequestMethod.GET)
-    public Album addAlbumToArtist (
-            @PathVariable("idArtist") Integer idArtist,
-            @PathVariable("nomAlbum") String nomAlbum
-    ){
-        // Je récupère l'artiste à partir de son ID
-        Artist artist = artistRepository.findById(idArtist).get();
-
-        // Je récupère l'album' à partir de son nom
-        Album album = (Album) albumRepository.findByTitle(nomAlbum);
-
-        // Je lie l'album à l'artiste
-        album.setArtist(artist);
-
-        // On sauvegarde l'album
-        return  albumRepository.save(album);
-    }
-
-     */
-
-
 
     // 8 - Suppression d'un album
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

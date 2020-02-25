@@ -33,10 +33,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleIllegalArgumentException(
-            IllegalArgumentException illegalArgumentException) {
-        return  illegalArgumentException.getMessage();
+    public String handleIllegalArgumentException(IllegalArgumentException e) {
+        return e.getMessage();
     }
+
 
     @ExceptionHandler(ConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
