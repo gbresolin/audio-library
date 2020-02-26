@@ -1,6 +1,7 @@
 package com.ipiecoles.java.audio.controller;
 
 
+import com.ipiecoles.java.audio.exception.ArtistException;
 import com.ipiecoles.java.audio.exception.ConflictException;
 import com.ipiecoles.java.audio.model.Artist;
 import com.ipiecoles.java.audio.repository.ArtistRepository;
@@ -108,7 +109,12 @@ public class ArtistController {
     // 6 - Suppression d'un Artiste
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteArtist(@PathVariable ("id") Integer idArtist) {
+    public void deleteArtist(@PathVariable ("id") Integer idArtist) throws ArtistException {
+        Optional<Artist> a = artistRepository.findById(idArtist);
+        Artist artist = a.get();
+        if(!artist.getAlbums().isEmpty()){
+            throw new ArtistException("Vous ne pouvez pas supprimer un artiste avec des albums !");
+        }
         artistRepository.deleteById(idArtist);
     }
 

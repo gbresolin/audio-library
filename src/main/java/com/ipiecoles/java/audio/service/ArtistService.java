@@ -62,6 +62,9 @@ public class ArtistService {
         if(artistRepository.existsByName(e.getName()) == true) {
             throw new ConflictException("L'artiste du nom de " + e.getName() + " existe déjà !");
         }
+        if(artistRepository.findByName(e.getName()).isEmpty()) {
+            throw new IllegalStateException ("L'artiste ne peut avoir une valeur NULL !");
+        }
         return artistRepository.save(e);
     }
 
