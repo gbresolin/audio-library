@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -75,7 +76,10 @@ public class ArtistController {
 
         Long maxPage = artistRepository.count() / size;
         if (page < 0 || page >= maxPage){
-            throw new IllegalArgumentException("La page " + page + " doit être comprise entre 0 et " + maxPage);
+            throw new IllegalArgumentException("Le numéro de page ne peut être supérieur à " + maxPage);
+        }
+        else if(countArtists() == 0){
+            throw new EntityNotFoundException("Il n'y a aucun artiste dans la base de données");
         }
 
         if(!Arrays.asList("id", "name").contains(sortProperty)){
@@ -101,7 +105,6 @@ public class ArtistController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public Artist updateArtist(@PathVariable("id") Integer id, @RequestBody Artist artist){
-        //return artistRepository.save(artist);
         return this.artistService.updateArtist(id,artist);
     }
 
@@ -109,12 +112,14 @@ public class ArtistController {
     // 6 - Suppression d'un Artiste
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteArtist(@PathVariable ("id") Integer idArtist) throws ArtistException {
+    public void deleteArtist(@PathVariable ("id") Integer idArtist) throws ConflictException {
         Optional<Artist> a = artistRepository.findById(idArtist);
         Artist artist = a.get();
+        /* -> Pour ne pas laisser des albums orphelins en BBD : désactivé pour faire fonctionner la question 6
         if(!artist.getAlbums().isEmpty()){
-            throw new ArtistException("Vous ne pouvez pas supprimer un artiste avec des albums !");
+            throw new ConflictException("Vous ne pouvez pas supprimer un artiste avec des albums !");
         }
+         */
         artistRepository.deleteById(idArtist);
     }
 

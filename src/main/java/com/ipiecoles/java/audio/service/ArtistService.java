@@ -30,6 +30,7 @@ public class ArtistService {
 
     @Autowired
     private ArtistRepository artistRepository;
+    private Object e;
 
     public Page<Artist> findByNameContainingIgnoreCase(
             @Min(message = "Le numéro de page ne peut être inférieur à 0", value = PAGE_MIN)
@@ -62,9 +63,11 @@ public class ArtistService {
         if(artistRepository.existsByName(e.getName()) == true) {
             throw new ConflictException("L'artiste du nom de " + e.getName() + " existe déjà !");
         }
-        if(artistRepository.findByName(e.getName()).isEmpty()) {
+        // On vérifie si l'utilisateur a saisi une valeur
+        if (e.getName().trim().isEmpty()) {
             throw new IllegalStateException ("L'artiste ne peut avoir une valeur NULL !");
         }
+
         return artistRepository.save(e);
     }
 
@@ -76,8 +79,11 @@ public class ArtistService {
         if(!id.equals(artist.getId())) {
             throw new IllegalArgumentException("Requête invalide");
         }
+        // On vérifie si l'utilisateur a saisi une valeur
+        if (artist.getName().trim().isEmpty()) {
+            throw new IllegalStateException ("L'artiste ne peut avoir une valeur NULL !");
+        }
         return artistRepository.save(artist);
     }
-
 
 }

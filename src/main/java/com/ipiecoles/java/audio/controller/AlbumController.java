@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/albums")
 public class AlbumController {
@@ -24,8 +27,12 @@ public class AlbumController {
     public Album createAlbum (
             @RequestBody Album album
     ) throws ConflictException {
+
         if(albumRepository.existsByTitle(album.getTitle()) == true){
             throw new ConflictException("L'album existe déjà");
+        }
+        if (album.getTitle().trim().isEmpty()) {
+            throw new IllegalStateException ("L'album ne peut avoir une valeur NULL !");
         }
         return albumRepository.save(album);
     }
@@ -36,8 +43,11 @@ public class AlbumController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAlbum (
             @PathVariable("id") Integer idAlbum){
+        Optional<Album> a = albumRepository.findById(idAlbum);
+        if(!a.isPresent()){
+            throw new EntityNotFoundException("L'album d'identifiant " + idAlbum + " n'a pas été trouvé !");
+        }
         albumRepository.deleteById(idAlbum);
     }
-
 
 }

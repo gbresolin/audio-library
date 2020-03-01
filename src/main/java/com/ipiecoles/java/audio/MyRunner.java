@@ -49,11 +49,11 @@ public class MyRunner implements CommandLineRunner {
         }
 
         // Pour afficher l'artiste en fonction de son ID
-        System.out.println(albumRepository.findById(1));
+        //System.out.println(albumRepository.findById(1));
 
         // rechercher un album en fonction de son nom
-        Album t = albumRepository.findByTitle("Facelift");
-        print("Le nom de l'album est : " + t);
+        //Album t = albumRepository.findByTitle("Facelift");
+        //print("Le nom de l'album est : " + t);
 
         // récupérer de manière paginée les artistes dont le nom contient une chaîne
         //de caractère sans prendre en compte la casse
@@ -62,47 +62,8 @@ public class MyRunner implements CommandLineRunner {
         Page<Artist> artists = artistRepository.findByNameContainingIgnoreCase("black", pageRequest);
         print("Les résultats sont : " + artists);
 
-
-
         artists.forEach(MyRunner::print);
 
-
-        /*
-        Page<Artist> emps = artistRepository.findAll(PageRequest.of(0,10, Sort.Direction.ASC, "name"));
-        System.out.println(emps.getTotalElements());
-        System.out.println(emps.getTotalPages());
-        for (Artist artist : emps){
-            System.out.println(artist);
-        }
-
-
-        Manager m = managerRepository.findOneWithEquipeById(43L);
-        print(m);
-        m.getEquipe().stream().forEach(MyRunner::print);
-        m.setPrenom(m.getPrenom().toUpperCase());
-        managerRepository.save(m);
-        print(employeRepository.count());
-        List<Employe> list = employeRepository.findByNomAndPrenom("Adam", "Laura");
-        list.stream().map(Employe::toString).forEach(MyRunner::print);
-        list = employeRepository.findByDateEmbaucheBefore(new LocalDate(2012,07,28));
-        list.stream().map(Employe::toString).forEach(MyRunner::print);
-        list = employeRepository.findByDateEmbaucheAfter(new LocalDate(2012,07,28));
-        list.stream().map(Employe::toString).forEach(MyRunner::print);
-        list = employeRepository.findBySalaireGreaterThanOrderBySalaireDesc(2000.0);
-        list.stream().map(Employe::toString).forEach(MyRunner::print);
-        list = employeRepository.findByNomOrPrenomAllIgnoreCase("adam");
-        list.stream().map(Employe::toString).forEach(MyRunner::print);
-        PageRequest pageRequest = new PageRequest(0, 5, Sort.Direction.ASC, "matricule");
-        Page<Technicien> techs = technicienRepository.findByNomIgnoreCase("adam", pageRequest);
-        while(pageRequest.next()){
-            techs.forEach(MyRunner::print);
-        }
-        print("coucou");
-        print("coucou3");
-        techs = technicienRepository.findByNomIgnoreCase("adam", pageRequest.next());
-        techs.forEach(MyRunner::print);
-        print(technicienRepository.findByNomOrPrenomAllIgnoreCase("adam").size());
-        print(employeRepository.findByNomOrPrenomAllIgnoreCase("adam").size());*/
 
     }
 
