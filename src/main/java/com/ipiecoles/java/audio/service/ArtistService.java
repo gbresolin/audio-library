@@ -63,9 +63,13 @@ public class ArtistService {
         if(artistRepository.existsByName(e.getName()) == true) {
             throw new ConflictException("L'artiste du nom de " + e.getName() + " existe déjà !");
         }
-        // On vérifie si l'utilisateur a saisi une valeur
+        // On vérifie si le nom de l'artiste est vide ou null
+        if (e.getName() == null) {
+            throw new IllegalStateException ("L'artiste ne peut avoir un nom NULL !");
+        }
+
         if (e.getName().trim().isEmpty()) {
-            throw new IllegalStateException ("L'artiste ne peut avoir une valeur NULL !");
+            throw new IllegalStateException ("L'artiste ne peut avoir un nom vide !");
         }
 
         return artistRepository.save(e);
@@ -81,7 +85,7 @@ public class ArtistService {
         }
         // On vérifie si l'utilisateur a saisi une valeur
         if (artist.getName().trim().isEmpty()) {
-            throw new IllegalStateException ("L'artiste ne peut avoir une valeur NULL !");
+            throw new IllegalStateException ("L'artiste ne peut avoir un nom vide !");
         }
         return artistRepository.save(artist);
     }

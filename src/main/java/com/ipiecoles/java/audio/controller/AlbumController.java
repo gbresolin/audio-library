@@ -31,8 +31,13 @@ public class AlbumController {
         if(albumRepository.existsByTitle(album.getTitle()) == true){
             throw new ConflictException("L'album existe déjà");
         }
+
+        if (album.getTitle() == null) {
+            throw new IllegalStateException ("L'album de peut avoir un titre null !");
+        }
+
         if (album.getTitle().trim().isEmpty()) {
-            throw new IllegalStateException ("L'album ne peut avoir une valeur NULL !");
+            throw new IllegalStateException ("L'album ne peut avoir un titre vide !");
         }
         return albumRepository.save(album);
     }
