@@ -33,7 +33,7 @@ public class AlbumController {
         }
 
         if (album.getTitle() == null) {
-            throw new IllegalStateException ("L'album de peut avoir un titre null !");
+            throw new IllegalStateException ("L'album ne peut avoir un titre null !");
         }
 
         if (album.getTitle().trim().isEmpty()) {
